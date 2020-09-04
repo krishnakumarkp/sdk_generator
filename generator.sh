@@ -36,7 +36,8 @@ while getopts :s:c:h opt; do
 done
 
 CURRENTDATETIME=`date +"%Y%m%d.%H%M%S"`
-SDK_VERSION="${SWAGGER_VERSION}:${CURRENTDATETIME}"
+SDK_VERSION="1.0.0"
+SDK_TAG="${SWAGGER_VERSION}/${CURRENTDATETIME}"
 
 URL="swagger_file/openapi.json"
 
@@ -44,7 +45,7 @@ SDK_GEN_FOLDER="sdk-php"
 SDK_REPO_FOLDER="sdk-repo"
 SWAGGER_REPO_FOLDER="swagger_file"
 SWAGGER_REPO="https://github.com/krishnakumarkp/bookstore-swagger.git"
-SDK_REPO="https://github.com/krishnakumarkp/sdk-php.git"
+SDK_REPO="git@github.com:krishnakumarkp/sdk-php.git"
 
 echo "generating sdk version $SDK_VERSION"
 COMMIT_MSG="Generated at $(date) with swagger file version $SWAGGER_VERSION"
@@ -107,7 +108,7 @@ if [ "$COMMIT" = "true" ]; then
 	git add .
 	git commit -a -m "$COMMIT_MSG"
 	git push origin master
-	git tag $SDK_VERSION
-	git push origin $SDK_VERSION
+	git tag $SDK_TAG
+	git push origin $SDK_TAG
 	echo "git pushed"
 fi
