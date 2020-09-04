@@ -39,11 +39,10 @@ CURRENTDATETIME=`date +"%Y%m%d.%H%M%S"`
 SDK_VERSION="1.0.0"
 SDK_TAG="${SWAGGER_VERSION}/${CURRENTDATETIME}"
 
-URL="swagger_file/openapi.json"
-
 SDK_GEN_FOLDER="sdk-php"
 SDK_REPO_FOLDER="sdk-repo"
-SWAGGER_REPO_FOLDER="swagger_file"
+SWAGGER_REPO_FOLDER="swagger-file"
+URL="${SWAGGER_REPO_FOLDER}/openapi.json"
 SWAGGER_REPO="https://github.com/krishnakumarkp/bookstore-swagger.git"
 SDK_REPO="git@github.com:krishnakumarkp/sdk-php.git"
 
@@ -85,7 +84,7 @@ if [ ! -d "$SDK_GEN_FOLDER" ]; then
 fi
 
 #checkout the repo for generated code
-
+delete_folder_if_exists $SDK_REPO_FOLDER
 git clone $SDK_REPO $SDK_REPO_FOLDER
 echo "clone $SDK_REPO_FOLDER"
 
