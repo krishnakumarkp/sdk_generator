@@ -1,0 +1,11 @@
+{
+    "require": {
+        "squizlabs/php_codesniffer": "*",
+        "pdepend/pdepend": "^2.8",
+        "phpunit/phpunit": "^9.3",
+        "sebastian/phpcpd": "*",
+        "phpmd/phpmd": "*",
+        "phploc/phploc": "*",
+        "phing/phing": "*"
+    }
+}

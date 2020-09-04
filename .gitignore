@@ -1,0 +1,6 @@
+/vendor
+/build
+/sdk-php
+/sdk-repo
+composer.lock
+composer.phar

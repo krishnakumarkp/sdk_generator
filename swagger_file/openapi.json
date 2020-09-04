@@ -1,0 +1,244 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "3.0.0",
+    "title": "Swagger Book",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://192.168.100.10:8080/api/v1"
+    }
+  ],
+  "paths": {
+    "/books": {
+      "get": {
+        "summary": "List of books",
+        "operationId": "listBooks",
+        "tags": [
+          "books"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of books",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/bookresponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new book",
+        "operationId": "addBook",
+        "requestBody": {
+          "description": "Book to add to the store",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newbook"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "book created"
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "summary": "get book by id",
+        "operationId": "findBook",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of book to fetch",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "book response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bookresponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "put": {
+        "description": "Updates a book",
+        "operationId": "updateBook",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of book to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Book to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newbook"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "book updated"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Updates a book",
+        "operationId": "deleteBook",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of book to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "book deleted"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "bookresponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "id of the book",
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "description": "title of the book",
+            "type": "string"
+          },
+          "author": {
+            "description": "author of the book",
+            "type": "string"
+          },
+          "published_date": {
+            "description": "YYYY-MM-DD\n\n The date the book was published",
+            "type": "string"
+          },
+          "image_url": {
+            "description": "image of the book",
+            "type": "string"
+          },
+          "description": {
+            "description": "description of the book",
+            "type": "string"
+          }
+        }
+      },
+      "newbook": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "title of the book",
+            "type": "string"
+          },
+          "author": {
+            "description": "author of the book",
+            "type": "string"
+          },
+          "published_date": {
+            "description": "YYYY-MM-DD\n\n The date the book was published",
+            "type": "string"
+          },
+          "image_url": {
+            "description": "image of the book",
+            "type": "string"
+          },
+          "description": {
+            "description": "description of the book",
+            "type": "string"
+          }
+        }
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "description": "List of errors errors",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
