@@ -36,7 +36,7 @@ fi
 
 COMMIT="true"
 CURRENTDATETIME=`date +"%Y%m%d.%H%M%S"`
-SDK_TAG="${SWAGGER_VERSION}/${CURRENTDATETIME}"
+SDK_TAG="${SWAGGER_VERSION}.${CURRENTDATETIME}"
 SDK_GEN_FOLDER="sdk-php"
 SDK_REPO_FOLDER="sdk-repo"
 SDK_REPO="git@github.com:krishnakumarkp/sdk-php.git"
