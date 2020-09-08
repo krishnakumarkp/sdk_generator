@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'buildserver' }
     stages {
-        stage('Get code from SCM') {
+        stage('Checkout SDK generator code') {
 			steps {
 				checkout(
 					[$class: 'GitSCM', branches: [[name: '*/master']], 
@@ -60,6 +60,11 @@ pipeline {
 				}
 			}
 			
+		}
+		stage('Software metrics') { 
+			steps { 
+				sh 'vendor/bin/pdepend --jdepend-xml=build/logs/jdepend.xml --jdepend-chart=build/pdepend/dependencies.svg --overview-pyramid=build/pdepend/overview-pyramid.svg --ignore=vendor sdk-php' 
+			} 
 		}
 		stage('Push php sdk') {
 			steps {
