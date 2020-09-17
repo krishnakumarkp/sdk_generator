@@ -4,6 +4,7 @@ RUN apt-get -y update
 RUN apt-get install -y software-properties-common 
 RUN apt-get -y update
 RUN apt-get install -y gnupg2
+RUN apt-get install -y wget
 RUN apt-get install -y openjdk-8-jdk
 
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
