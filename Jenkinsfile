@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'buildserver' }
+    agent { dockerfile true }
     stages {
         stage('Checkout SDK generator code') {
 			steps {
