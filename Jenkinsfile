@@ -14,13 +14,13 @@ pipeline {
     stages {
         stage('Check Params') {
 			steps {
-				script(
+				script{
 					
 					//Swagger version is required for local to tag generated sdk. For REMOTE, if SWAGGER_VERSION is not provided, it will be derived from latest tag. 
 					if ("${params.SWAGGER_VERSION}".isEmpty() && "${params.SWAGGER_FILE}" == "LOCAL") { 
 						abort_pipeline("SWAGGER_VERSION") 
 					} 
-				)
+				}
 			}
         }
         stage('Prepare') {
