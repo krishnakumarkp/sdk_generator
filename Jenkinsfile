@@ -1,14 +1,25 @@
+
+def abort_pipeline(param){ 
+	currentBuild.result = 'ABORTED' 
+	error(param + ' is required.') 
+} 
+
 pipeline {
-    agent { dockerfile true }
+    agent { 
+		docker{
+			image 'krishnakumarkp/sdk-gen'
+			label 'nprod-small'
+		}
+	}
     stages {
-        stage('Checkout SDK generator code') {
+        stage('Check Params') {
 			steps {
-				checkout(
-					[$class: 'GitSCM', branches: [[name: '*/master']], 
-					doGenerateSubmoduleConfigurations: false,
-					extensions: [], 
-					submoduleCfg: [], 
-					userRemoteConfigs: [[url: 'https://github.com/krishnakumarkp/sdk_generator']]]
+				script(
+					
+					//Swagger version is required for local to tag generated sdk. For REMOTE, if SWAGGER_VERSION is not provided, it will be derived from latest tag. 
+					if ("${params.SWAGGER_VERSION}".isEmpty() && "${params.SWAGGER_FILE}" == "LOCAL") { 
+						abort_pipeline("SWAGGER_VERSION") 
+					} 
 				)
 			}
         }
@@ -28,13 +39,21 @@ pipeline {
         }
 		stage('Install composer and dependencies') {
 			steps {
-				sh 'wget -q https://getcomposer.org/download/1.10.10/composer.phar'
-				sh 'php composer.phar install --prefer-dist --no-progress'
+				sh 'composer install --prefer-dist --no-progress'
+            }
+        }
+		stage('Add known keys') {
+			steps {
+				sh """
+					ssh-keyscan github.com >> ~/.ssh/known_hosts
+				"""
             }
         }
 		stage('Generate php sdk') {
 			steps {
-				sh 'bash generator.sh -s 20200905.141900'
+				sshagent(['jenkins_key']) {
+					sh 'bash generator.sh -s "$SWAGGER_VERSION"'
+				}
             }
         }
 		stage("PHPLint") {
@@ -68,7 +87,9 @@ pipeline {
 		}
 		stage('Push php sdk') {
 			steps {
-				sh 'bash git_push.sh -s 20200905.141900'
+				sshagent(['jenkins_key']) {
+					sh 'bash git_push.sh -s "$SWAGGER_VERSION"'
+				}	
             }
         }
     }

@@ -1,13 +1,21 @@
-FROM ubuntu:16.04
+FROM amazonlinux:2
+USER root
+RUN yum update -y 
+RUN yum install -y ca-certificates curl software-properties-common wget unzip zip tar which curl
+RUN amazon-linux-extras install php7.2
 
-RUN apt-get -y update 
-RUN apt-get install -y software-properties-common 
-RUN apt-get -y update
-RUN apt-get install -y gnupg2
-RUN apt-get install -y wget
-RUN apt-get install -y openjdk-8-jdk
-RUN apt-get install -y git
+# Install PHP 7.2
+RUN yum update -y \
+    && yum groupinstall "Development tools" -y \
+    && yum install -y which libmemcached-devel zlib-devel \
+    && yum install -y php php-cli php-devel php-pdo php-mbstring php-pear \
+    && yum clean all && rm -rf /var/cache/yum
 
-RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
-RUN apt-get update
-RUN apt-get install -y php7.1 php7.1-cli php7.1-common php7.1-json php7.1-mbstring php7.1-mcrypt php7.1-zip php7.1-xml
+RUN yum install -y php-mbstring
+RUN curl -s https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
+RUN chmod +x /usr/local/bin/composer
+
+RUN yum install -y java-11-amazon-corretto-headless 
+USER jenkins
+CMD [ "java", "-version" ]
