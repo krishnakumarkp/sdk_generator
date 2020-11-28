@@ -5,7 +5,6 @@ RUN yum install -y ca-certificates curl software-properties-common wget unzip zi
 RUN amazon-linux-extras install php7.2
 
 RUN set -ex \
-    && groupadd jenkins \
     && useradd -m -d /home/jenkins -u 112 -U jenkins \
     && mkdir -p /home/jenkins/.ssh \
     && chown jenkins:jenkins /home/jenkins/.ssh \
