@@ -88,7 +88,12 @@ pipeline {
 		stage('Push php sdk') {
 			steps {
 				sshagent(['jenkinsuser']) {
-					sh 'bash git_push.sh -s "$SWAGGER_VERSION"'
+					sh """
+				
+						git config --global user.email "jenkins@jenkins.com"
+						git config --global user.name "jenkin"
+						bash git_push.sh -s "$SWAGGER_VERSION"
+					"""
 				}	
             }
         }
