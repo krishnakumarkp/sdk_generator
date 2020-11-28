@@ -8,7 +8,7 @@ pipeline {
     agent { 
 		docker{
 			image 'krishnakumarkp/sdk-gen'
-			label 'nprod-small'
+			label 'latest'
 		}
 	}
     stages {
