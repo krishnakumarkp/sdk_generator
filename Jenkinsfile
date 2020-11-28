@@ -45,7 +45,7 @@ pipeline {
 			steps {
 				sh """
 				
-					ssh-keyscan github.com >> ~/.ssh/known_hosts
+					ssh-keyscan github.com >> /home/jenkins/.ssh/known_hosts
 				"""
             }
         }
