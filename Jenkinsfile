@@ -44,6 +44,7 @@ pipeline {
 		stage('Add known keys') {
 			steps {
 				sh """
+					whoami
 					mkdir ~/.ssh
 					touch ~/.ssh/known_hosts
 					ssh-keyscan github.com >> ~/.ssh/known_hosts
