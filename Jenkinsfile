@@ -52,7 +52,7 @@ pipeline {
         }
 		stage('Generate php sdk') {
 			steps {
-				sshagent(['jenkins_key']) {
+				sshagent(['jenkinsuser']) {
 					sh 'bash generator.sh -s "$SWAGGER_VERSION"'
 				}
             }
@@ -88,7 +88,7 @@ pipeline {
 		}
 		stage('Push php sdk') {
 			steps {
-				sshagent(['jenkins_key']) {
+				sshagent(['jenkinsuser']) {
 					sh 'bash git_push.sh -s "$SWAGGER_VERSION"'
 				}	
             }

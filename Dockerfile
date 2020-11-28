@@ -19,4 +19,5 @@ RUN curl -s https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 RUN yum install -y java-11-amazon-corretto-headless 
+USER user
 CMD [ "java", "-version" ]
