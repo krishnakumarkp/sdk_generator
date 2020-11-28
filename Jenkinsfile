@@ -44,7 +44,7 @@ pipeline {
 		stage('Add known keys') {
 			steps {
 				sh """
-
+				
 					ssh-keyscan github.com >> ~.ssh/known_hosts
 				"""
             }
@@ -64,7 +64,7 @@ pipeline {
 		stage('Checkstyle Report') {
 			steps {
 				script { 
-					sh 'vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=PSR12 --extensions=php --ignore=autoload.php --ignore=vendor/ sdk-php'
+					sh 'vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=PSR12 --extensions=php --ignore=autoload.php --ignore=vendor/ sdk-php || exit 0'
 					def checkstyle = scanForIssues tool: checkStyle(pattern: 'build/logs/checkstyle.xml')
 					publishIssues issues: [checkstyle]
 				}
@@ -73,7 +73,7 @@ pipeline {
 		stage('Mess Detection Report') {
 			steps {
 				script { 
-					sh 'vendor/bin/phpmd sdk-php xml build/phpmd.xml --reportfile build/logs/pmd.xml --exclude vendor/ --exclude autoload.php'
+					sh 'vendor/bin/phpmd sdk-php xml build/phpmd.xml --reportfile build/logs/pmd.xml --exclude vendor/ --exclude autoload.php || exit 0'
 					def pmd = scanForIssues tool: pmdParser(pattern: 'build/logs/pmd.xml')
 					publishIssues issues: [pmd]
 				}
