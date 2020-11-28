@@ -8,7 +8,6 @@ pipeline {
     agent { 
 		docker{
 			image 'krishnakumarkp/sdk-gen'
-			label 'latest'
 		}
 	}
     stages {
