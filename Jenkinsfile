@@ -8,6 +8,7 @@ pipeline {
     agent { 
 		docker{
 			image 'krishnakumarkp/sdk-gen'
+			args '-v /etc/passwd:/etc/passwd'
 		}
 	}
     stages {
