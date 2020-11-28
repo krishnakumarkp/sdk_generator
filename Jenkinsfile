@@ -8,7 +8,6 @@ pipeline {
     agent { 
 		docker{
 			image 'krishnakumarkp/sdk-gen'
-			args '-v /etc/passwd:/etc/passwd'
 		}
 	}
     stages {
@@ -46,7 +45,7 @@ pipeline {
 			steps {
 				sh """
 				
-					ssh-keyscan github.com >> ~.ssh/known_hosts
+					ssh-keyscan github.com >> ~/.ssh/known_hosts
 				"""
             }
         }

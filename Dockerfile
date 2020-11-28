@@ -1,8 +1,15 @@
 FROM amazonlinux:2
-USER root
+
 RUN yum update -y 
 RUN yum install -y ca-certificates curl software-properties-common wget unzip zip tar which curl git
 RUN amazon-linux-extras install php7.2
+
+RUN set -ex \
+    && groupadd jenkins \
+    && useradd -m -d /home/jenkins -u 112 -U jenkins \
+    && mkdir -p /home/jenkins/.ssh \
+    && chown jenkins:jenkins /home/jenkins/.ssh \
+    && chmod 700 /home/jenkins/.ssh
 
 # Install PHP 7.2
 RUN yum update -y \
@@ -19,5 +26,5 @@ RUN curl -s https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 RUN yum install -y java-11-amazon-corretto-headless 
-USER user
+USER jenkins
 CMD [ "java", "-version" ]
