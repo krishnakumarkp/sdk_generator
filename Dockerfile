@@ -27,6 +27,6 @@ RUN curl -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sona
   && unzip -qq sonarscanner.zip \
   && rm -rf sonarscanner.zip \
   && mv sonar-scanner-4.5.0.2216 sonar-scanner
-ENV PATH $PATH:sonar-scanner/bin
+ENV PATH="/sonar-scanner/bin:${PATH}"
 USER jenkins
 CMD [ "java", "-version" ]

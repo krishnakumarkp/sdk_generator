@@ -87,7 +87,7 @@ pipeline {
 		}
 		stage('SonarTests') {
 			steps { 
-				sh 'sonar-scanner -Dproject.settings=./sonar-project.properties'
+				sh 'sonar-scanner -Dproject.settings=sonar-project.properties'
 			}
 		}
 		stage('Push php sdk') {
