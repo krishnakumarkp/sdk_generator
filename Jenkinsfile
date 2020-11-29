@@ -85,6 +85,11 @@ pipeline {
 				sh 'vendor/bin/pdepend --jdepend-xml=build/logs/jdepend.xml --jdepend-chart=build/pdepend/dependencies.svg --overview-pyramid=build/pdepend/overview-pyramid.svg --ignore=vendor sdk-php' 
 			} 
 		}
+		stage('SonarTests') {
+			steps { 
+				sh 'sonar-scanner -Dproject.settings=./sonar-project.properties'
+			}
+		}
 		stage('Push php sdk') {
 			steps {
 				sshagent(['jenkinsuser']) {

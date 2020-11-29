@@ -17,13 +17,16 @@ RUN yum update -y \
     && yum install -y php php-cli php-devel php-pdo php-mbstring php-pear \
     && yum clean all && rm -rf /var/cache/yum
 
-RUN git config --global user.name "jenkins"
-RUN git config --global user.email "jenkins@jenkins.com"
-
 RUN yum install -y php-mbstring
 RUN curl -s https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 RUN yum install -y java-11-amazon-corretto-headless 
+#install sonar scanner
+RUN curl -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.5.0.2216.zip -o  sonarscanner.zip \
+  && unzip -qq sonarscanner.zip \
+  && rm -rf sonarscanner.zip \
+  && mv sonar-scanner-4.5.0.2216 sonar-scanner
+ENV PATH $PATH:sonar-scanner/bin
 USER jenkins
 CMD [ "java", "-version" ]
