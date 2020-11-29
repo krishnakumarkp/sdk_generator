@@ -87,7 +87,7 @@ pipeline {
 		}
 		stage('SonarTests') {
 			steps { 
-				sh 'sonar-scanner'
+				sh "sonar-scanner -Dsonar.projectKey=php_sdk_gen_2 -Dsonar.sources=./sdk-php -Dsonar.host.url=http://192.168.100.30:9000 -Dsonar.login=a3e51c3023533bc2e8145bad7028a710fe436bc5"
 			}
 		}
 		stage('Push php sdk') {
